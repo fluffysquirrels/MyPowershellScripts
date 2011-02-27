@@ -1,34 +1,27 @@
-$ErrorActionPreference = "Stop"
+New-Alias new New-Object -ErrorAction SilentlyContinue
 
-# ************ Load other profile scripts ************
+function Get-Type
+{
+    [AppDomain]::CurrentDomain.GetAssemblies() | %{$_.GetModules()} | %{$_.FindTypes($null, $null)}
+}
 
-$profileDirectory = split-path $profile
-
+function Restart-Ps {
+    $cline = "`"/c start powershell.exe -noexit -c `"set-location '{0}'" -f $pwd.path
+    cmd $cline
+    Stop-Process -Id $PID
+}
 function Load-ProfileScripts {
-    $autoLoadPath = join-path $profileDirectory "AutoLoad"
+    write-output "`nLoading profile scripts . . . `n"
+    
+    $autoLoadPath = join-path (split-path $profile) "AutoLoad"
     $toLoad = (gci -recurse $autoLoadPath | ?{$_.FullName -ne $profile})
     foreach($scriptFile in $toLoad)
     {
-        . Load-Script($scriptFile)
+        write-output ("Loading {0}" -f $scriptFile.Name)
+        . $scriptFile.FullName
     }
-}
-function Load-Script($scriptFile)
-{
-    # If $scriptFile is a path string, fetch the fileinfo from that path.
-    if ($scriptFile -is "String")
-    {
-        $scriptFile = gi $scriptFile
-    }
-    
-    # $scriptFile is a fileinfo object.
-    write-host ("Loading {0}\" -f $scriptFile.Directory.FullName) -nonewline
-    write-host $scriptFile.Name -foregroundcolor yellow
-    
-    . $scriptFile.FullName
+    write-output ""
 }
 
-"`nLoading profile scripts . . . `n"
+# For explanation of the dot below: http://blairconrad.wordpress.com/2010/01/29/expand-your-scope-you-can-dot-source-more-than-just-files/
 . Load-ProfileScripts
-""
-. Load-Script ("D:\Projects\Git\LoanBook2\DeployTools\ParkerFox build and deploy.ps1")
-""
