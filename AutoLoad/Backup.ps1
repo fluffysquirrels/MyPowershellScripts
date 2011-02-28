@@ -2,6 +2,8 @@ $Backup_TargetDir = "Q:\Alex H backup"
 
 function Backup([switch]$dryRun = $false)
 {
+    write-host "$([DateTime]::Now) -- started backup`n"
+
     if (!$dryRun)
     {
         Write-Host "Deleting $Backup_TargetDir\*`n"
@@ -11,7 +13,7 @@ function Backup([switch]$dryRun = $false)
     $allFromDToCopy = (
         "D:\Documents",
         "D:\Projects\Git\*.*",
-        "D:\Projects\SQL scripts",
+        "D:\Projects\SQL tool scripts",
         "D:\Run box shortcuts"
         )
     
@@ -24,7 +26,10 @@ function Backup([switch]$dryRun = $false)
         Backup-LoggedCopy $from $to -dryRun:$dryRun
     }
     
+    # Backup profile
     Backup-LoggedCopy (split-path $profile) $Backup_TargetDir -dryRun:$dryRun
+    
+    write-host "`n$([DateTime]::Now) -- finished backup"
 }
 
 function Backup-GetGitDataDirectories()
