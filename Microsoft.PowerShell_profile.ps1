@@ -30,5 +30,5 @@ function Load-Script($scriptFile)
 "`nLoading profile scripts . . . `n"
 . Load-ProfileScripts
 ""
-. Load-Script ("D:\Projects\Git\LoanBook2\DeployTools\ParkerFox build and deploy.ps1")
+. Load-Script ("D:\Projects\Git\LoanBookUK\DeployTools\Scripts\Build and deploy.ps1")
 ""
