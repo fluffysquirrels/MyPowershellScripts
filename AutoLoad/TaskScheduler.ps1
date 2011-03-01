@@ -2,7 +2,9 @@ function Get-AllScheduledTasks($machine)
 {
     $service = Get-ScheduleService $machine
     
-    return Get-AllScheduledTasks-Recursive $service -path "\"
+    $t = (Get-AllScheduledTasks-Recursive $service -path "\")
+    
+    return $t
 }
 
 function Get-ScheduleService($machine = "localhost") {
@@ -22,10 +24,8 @@ function Get-ScheduleService($machine = "localhost") {
 function Get-AllScheduledTasks-Recursive($service, $path)
 {
     $folder = $service.GetFolder($path)
-    Write-Host "rec '$path'"
-    $tasks = _TaskScheduler-GetFolderTasks $service $path
     
-    Write-Host "mine count = $($tasks.Length)"
+    $tasks = _TaskScheduler-GetFolderTasks $service $path
     
     $subFolders = $folder.GetFolders(0 # Reserved param; must equal 0.
                                         )
@@ -33,7 +33,6 @@ function Get-AllScheduledTasks-Recursive($service, $path)
     foreach($subFolder in $subFolders) {
         $subTasks = Get-AllScheduledTasks-Recursive $service $subFolder.Path
         $tasks = $tasks + $subTasks
-        Write-Host "rec '$path' subtasks count = $($subTasks.Length); mine count = $($tasks.Length)"
     }
     
     return $tasks
@@ -47,7 +46,9 @@ function _TaskScheduler-GetFolderTasks($service, $path)
     
     foreach($task in $folder.GetTasks(1) #1 = include hidden tasks, 0 = don't.
                                          ){
-        $task = $task | add-member noteproperty "Machine" $service.TargetServer
+        $task = [psobject] $task
+        
+        ($task | add-member noteproperty "Machine" $service.TargetServer)
         
         $rv += $task
     }
