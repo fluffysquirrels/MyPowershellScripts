@@ -48,10 +48,23 @@ function _TaskScheduler-GetFolderTasks($service, $path)
                                          ){
         $task = [psobject] $task
         
-        ($task | add-member noteproperty "Machine" $service.TargetServer)
+        _TaskScheduler-AnnotateTask $task $service
         
         $rv += $task
     }
     
     return $rv
+}
+
+function _TaskScheduler-AnnotateTask($task, $service)
+{
+    $task | add-member noteproperty "Machine" $service.TargetServer
+    
+    $taskXml = [xml] $task.Xml
+    
+    $command = $taskXml.Task.Actions.Exec.Command
+    $args = $taskXml.Task.Actions.Exec.Arguments
+    
+    $task | add-member noteproperty "Command" $command
+    $task | add-member noteproperty "Arguments" $args
 }
