@@ -1,4 +1,4 @@
-function Get-AllScheduledTasks($machines)
+function Get-ScheduledTasks($machines)
 {
     $allTasks = @()
     
@@ -11,11 +11,11 @@ function Get-AllScheduledTasks($machines)
     return $allTasks
 }
 
-function Get-AllScheduledTasks-EachMachine($machine)
+function Get-ScheduledTasks-EachMachine($machine)
 {
     $service = Get-ScheduleService $machine
     
-    $t = (Get-AllScheduledTasks-Recursive $service -path "\")
+    $t = (Get-ScheduledTasks-Recursive $service -path "\")
     
     return $t
 }
@@ -34,7 +34,7 @@ function Get-ScheduleService($machine = "localhost") {
     return $service
 }
 
-function Get-AllScheduledTasks-Recursive($service, $path)
+function Get-ScheduledTasks-Recursive($service, $path)
 {
     $folder = $service.GetFolder($path)
     
@@ -44,7 +44,7 @@ function Get-AllScheduledTasks-Recursive($service, $path)
                                         )
     
     foreach($subFolder in $subFolders) {
-        $subTasks = Get-AllScheduledTasks-Recursive $service $subFolder.Path
+        $subTasks = Get-ScheduledTasks-Recursive $service $subFolder.Path
         $tasks = $tasks + $subTasks
     }
     

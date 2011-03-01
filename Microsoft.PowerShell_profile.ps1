@@ -6,7 +6,7 @@ $profileDirectory = split-path $profile
 
 function Load-AutoLoadProfileScripts {
     $autoLoadPath = join-path $profileDirectory "AutoLoad"
-    $toLoad = (gci -recurse $autoLoadPath | ?{$_.FullName -ne $profile})
+    $toLoad = (gci -recurse $autoLoadPath | ?{$_ -is "System.IO.FileInfo" -and $_.FullName -ne $profile})
     foreach($scriptFile in $toLoad)
     {
         . Load-Script($scriptFile)
