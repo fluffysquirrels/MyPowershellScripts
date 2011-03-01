@@ -1,4 +1,17 @@
-function Get-AllScheduledTasks($machine)
+function Get-AllScheduledTasks($machines)
+{
+    $allTasks = @()
+    
+    foreach($machine in $machines)
+    {
+        $machineTasks = Get-AllScheduledTasks-EachMachine($machine)
+        $allTasks += $machineTasks
+    }
+    
+    return $allTasks
+}
+
+function Get-AllScheduledTasks-EachMachine($machine)
 {
     $service = Get-ScheduleService $machine
     
