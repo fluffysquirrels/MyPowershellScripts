@@ -4,7 +4,7 @@ $ErrorActionPreference = "Stop"
 
 $profileDirectory = split-path $profile
 
-function Load-ProfileScripts {
+function Load-AutoLoadProfileScripts {
     $autoLoadPath = join-path $profileDirectory "AutoLoad"
     $toLoad = (gci -recurse $autoLoadPath | ?{$_.FullName -ne $profile})
     foreach($scriptFile in $toLoad)
@@ -27,8 +27,27 @@ function Load-Script($scriptFile)
     . $scriptFile.FullName
 }
 
+function Load-ParkerFoxScriptsIfAtWork()
+{
+    $parkerFoxBuildScriptFn = "D:\Projects\Git\LoanBookUK\DeployTools\Scripts\Build and deploy.ps1"
+
+    $workPcName = "BUNGLE"
+    $thisPcName = gc env:computername
+    
+    if($thisPcName -eq $workPcName)
+    {
+        . Load-Script $parkerFoxBuildScriptFn
+    }
+    else
+    {
+        "Not loading Parker Fox scripts because we're on '$thisPcName', not '$workPcName'."
+    }
+}
+
+
+
 "`nLoading profile scripts . . . `n"
-. Load-ProfileScripts
+. Load-AutoLoadProfileScripts
 ""
-. Load-Script ("D:\Projects\Git\LoanBookUK\DeployTools\Scripts\Build and deploy.ps1")
+. Load-ParkerFoxScriptsIfAtWork
 ""
