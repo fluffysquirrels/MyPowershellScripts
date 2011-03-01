@@ -1,0 +1,28 @@
+﻿#results
+{
+    border-collapse:collapse;
+}
+
+#results td
+{
+    border: 1px solid #000;
+    padding: 2px 5px;
+}
+
+#results .header th
+{
+    font-weight: bold;
+    background-image: url('img/bg.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    padding-right: 20px;
+}
+#results .header th.headerSortUp
+{
+    background-image: url('img/asc.gif');
+}
+#results .header th.headerSortDown
+{
+    background-image: url('img/desc.gif');
+}

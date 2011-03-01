@@ -4,7 +4,7 @@ function Get-ScheduledTasks($machines)
     
     foreach($machine in $machines)
     {
-        $machineTasks = Get-AllScheduledTasks-EachMachine($machine)
+        $machineTasks = Get-ScheduledTasks-EachMachine($machine)
         $allTasks += $machineTasks
     }
     
