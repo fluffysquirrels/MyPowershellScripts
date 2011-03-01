@@ -2,10 +2,10 @@ $ErrorActionPreference = "Stop"
 
 # ************ Load other profile scripts ************
 
-$profileDirectory = split-path $profile
+$profileDir = split-path $profile
 
 function Load-AutoLoadProfileScripts {
-    $autoLoadPath = join-path $profileDirectory "AutoLoad"
+    $autoLoadPath = join-path $profileDir "AutoLoad"
     $toLoad = (gci -recurse $autoLoadPath | 
                ?{$_ -is "System.IO.FileInfo" -and
                $_.Extension -eq ".ps1" -and
