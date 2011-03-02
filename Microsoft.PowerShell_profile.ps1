@@ -4,7 +4,7 @@ $ErrorActionPreference = "Stop"
 
 $profileDir = split-path $profile
 
-function Load-AutoLoadScripts()
+function Load-AutoLoadScripts($path)
 {
     $toLoad = (gci -recurse $path | 
                ?{$_ -is "System.IO.FileInfo" -and
@@ -33,7 +33,7 @@ function Load-Script($scriptFile)
 
 function Load-ParkerFoxScriptsIfAtWork()
 {
-    $parkerFoxBuildScripts = "D:\Projects\Git\LoanBookUK\DeployTools\Scripts\Build and deploy.ps1"
+    $parkerFoxBuildScripts = "D:\Projects\Git\LoanBookUK\DeployTools\Scripts"
 
     if(Is-AtWork)
     {
