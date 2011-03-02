@@ -1,13 +1,13 @@
 $Backup_TargetDir = "Q:\Alex H backup"
 
-function Backup([switch]$dryRun = $false)
+function Backup([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
 {
     write-host "$([DateTime]::Now) -- started backup`n"
 
     if (!$dryRun)
     {
         Write-Host "Deleting $Backup_TargetDir\*`n"
-        del -recurse (join-path $Backup_TargetDir *)
+        del -recurse -force (join-path $Backup_TargetDir *)
     }
 
     $allFromDToCopy = (
@@ -17,17 +17,27 @@ function Backup([switch]$dryRun = $false)
         "D:\Run box shortcuts"
         )
     
-    $allFromDToCopy += Backup-GetGitDataDirectories
+    if($includeGitRepositories)
+    {
+        $allFromDToCopy += Backup-GetGitDataDirectories
+    }
+    
+    function DoBackupCopy($from, $to)
+    {
+        Backup-LoggedCopy $from $to -dryRun:$dryRun
+    }
     
     foreach($from in $allFromDToCopy)
     {
         $to = (join-path $Backup_TargetDir (split-path $from.Replace("D:", "")))
         
-        Backup-LoggedCopy $from $to -dryRun:$dryRun
+         DoBackupCopy $from $to
     }
     
     # Backup profile
-    Backup-LoggedCopy (split-path $profile) $Backup_TargetDir -dryRun:$dryRun
+    DoBackupCopy (split-path $profile) $Backup_TargetDir
+    # Backup Tomboy
+    DoBackupCopy "C:\Users\Alex\AppData\Roaming\Tomboy\notes"  (join-path $Backup_TargetDir "Tomboy notes")
     
     write-host "`n$([DateTime]::Now) -- finished backup"
 }
