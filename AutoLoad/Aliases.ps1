@@ -8,5 +8,6 @@ function Get-HelpWithLess() {
 
 # So we can reload profile just by typing '. p'
 New-AliasInProfile p ($profile)
-New-AliasInProfile new New-Object
 New-AliasInProfile help Get-HelpWithLess
+New-AliasInProfile l less
+New-AliasInProfile new New-Object
