@@ -1,5 +1,5 @@
 $Backup_TargetDir = "Q:\Alex H backup"
-$Backup_LogfileName = join-path $Backup_TargetDir "BackupLog.txt"
+$Backup_LogfileName = $Backup_TargetDir + "\BackupLog.txt"
 function Backup([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
 {
     $machineName = (gc env:COMPUTERNAME)
