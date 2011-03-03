@@ -1,15 +1,30 @@
 $Backup_TargetDir = "Q:\Alex H backup"
-
-function Backup([switch]$dryRun = $false)
+$Backup_LogfileName = join-path $Backup_TargetDir "BackupLog.txt"
+function Backup([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
 {
-    write-host "$([DateTime]::Now) -- started backup`n"
+    $machineName = (gc env:COMPUTERNAME)
+    if($machineName -ne "BUNGLE")
+    {
+        Write-Host "On '$machineName', not 'BUNGLE'!"
+        Write-Host "Backup is only set up on 'BUNGLE'"
+        return
+    }
+
+    $startMessage = "$([DateTime]::Now) -- started backup"
+    $startMessage >> $Backup_LogfileName
+    write-host $startMessage, "`n"
 
     if (!$dryRun)
     {
-        Write-Host "Deleting $Backup_TargetDir\*`n"
-        del -recurse (join-path $Backup_TargetDir *)
+        $toDelete = (gci $Backup_TargetDir | ?{$_.PSIsContainer} | %{$_.FullName})
+        $toDelete | % {
+            Write-Host "Deleting $_\"
+            del -recurse -force $_
+        }
     }
 
+    Write-Host ""
+    
     $allFromDToCopy = (
         "D:\Documents",
         "D:\Projects\Git\*.*",
@@ -17,19 +32,32 @@ function Backup([switch]$dryRun = $false)
         "D:\Run box shortcuts"
         )
     
-    $allFromDToCopy += Backup-GetGitDataDirectories
+    if($includeGitRepositories)
+    {
+        $allFromDToCopy += Backup-GetGitDataDirectories
+    }
+    
+    function DoBackupCopy($from, $to)
+    {
+        Backup-LoggedCopy $from $to -dryRun:$dryRun
+    }
     
     foreach($from in $allFromDToCopy)
     {
         $to = (join-path $Backup_TargetDir (split-path $from.Replace("D:", "")))
         
-        Backup-LoggedCopy $from $to -dryRun:$dryRun
+         DoBackupCopy $from $to
     }
     
     # Backup profile
-    Backup-LoggedCopy (split-path $profile) $Backup_TargetDir -dryRun:$dryRun
+    DoBackupCopy (split-path $profile) $Backup_TargetDir
+    # Backup Tomboy
+    DoBackupCopy "C:\Users\Alex\AppData\Roaming\Tomboy\notes"  (join-path $Backup_TargetDir "Tomboy notes")
     
-    write-host "`n$([DateTime]::Now) -- finished backup"
+    
+    $endMessage = "$([DateTime]::Now) -- finished backup"
+    $endMessage, "`n" >> $Backup_LogfileName
+    write-host "`n", $endMessage
 }
 
 function Backup-GetGitDataDirectories()
