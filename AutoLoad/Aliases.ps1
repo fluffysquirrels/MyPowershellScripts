@@ -23,7 +23,6 @@ function Get-HelpWithLess
 {
     (Get-Help @psboundparameters) | less
 }
-
 function Get-HelpWithLessDetailed
 (
     $Name,
@@ -42,6 +41,7 @@ function Get-HelpWithLessDetailed
 
 New-AliasInProfile help Get-HelpWithLess
 New-AliasInProfile helpd Get-HelpWithLessDetailed
+New-AliasInProfile l less
 New-AliasInProfile new New-Object
 # So we can reload profile just by typing '. p'
 New-AliasInProfile p ($profile)
