@@ -6,14 +6,14 @@ $profileDir = split-path $profile
 
 function Load-AutoLoadScripts($path)
 {
-    $toLoad = (gci -recurse $path | 
+    $toLoad = @(gci -recurse $path | 
                ?{$_ -is "System.IO.FileInfo" -and
                $_.Extension -eq ".ps1" -and
                $_.FullName -ne $profile})
                
-    foreach($scriptFile in $toLoad)
+    foreach($script in $toLoad)
     {
-        . Load-Script($scriptFile)
+        . Load-Script $script
     }
 }
 function Load-Script($scriptFile)
@@ -33,11 +33,10 @@ function Load-Script($scriptFile)
 
 function Load-ParkerFoxScriptsIfAtWork()
 {
-    $parkerFoxBuildScripts = "D:\Projects\Git\LoanBookUK\DeployTools\Scripts"
-
     if(Is-AtWork)
     {
-        . Load-AutoLoadScripts $parkerFoxBuildScripts
+        . Load-AutoLoadScripts "D:\Projects\Git\LoanBookUK\DeployTools\Scripts"
+        . Load-AutoLoadScripts "D:\Projects\Git\AspNetStats\Scripts"
     }
 }
 
