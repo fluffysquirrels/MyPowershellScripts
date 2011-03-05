@@ -39,9 +39,10 @@ function Get-HelpWithLessDetailed
     (Get-Help @psboundparameters -detailed) | less
 }
 
-New-AliasInProfile help Get-HelpWithLess
-New-AliasInProfile helpd Get-HelpWithLessDetailed
-New-AliasInProfile l less
-New-AliasInProfile new New-Object
+New-AliasInProfile fs           Format-String
+New-AliasInProfile help         Get-HelpWithLess
+New-AliasInProfile helpd        Get-HelpWithLessDetailed
+New-AliasInProfile l            less
+New-AliasInProfile new          New-Object
 # So we can reload profile just by typing '. p'
-New-AliasInProfile p ($profile)
+New-AliasInProfile p            ($profile)
