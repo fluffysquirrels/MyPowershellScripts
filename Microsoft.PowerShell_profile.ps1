@@ -40,7 +40,7 @@ function Load-ParkerFoxScripts()
     }
     else
     {
-        . Load-LoadScript "C:\Data\Code\Parker Fox\LoanBook\DeployTools\Scripts\Main.ps1"
+        . Load-Script "C:\Data\Code\Parker Fox\LoanBook\DeployTools\Scripts\Main.ps1"
     }
 }
 
