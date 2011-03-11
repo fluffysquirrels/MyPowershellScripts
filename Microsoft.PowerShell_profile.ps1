@@ -31,12 +31,16 @@ function Load-Script($scriptFile)
     . $scriptFile.FullName
 }
 
-function Load-ParkerFoxScriptsIfAtWork()
+function Load-ParkerFoxScripts()
 {
     if(Is-AtWork)
     {
-        . Load-AutoLoadScripts "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts"
+        . Load-AutoLoadScripts "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\Main.ps1"
         . Load-Script "D:\Projects\Git\AspNetStats\Scripts\Poller.ps1"
+    }
+    else
+    {
+        . Load-Script "C:\Data\Code\Parker Fox\LoanBook\DeployTools\Scripts\Main.ps1"
     }
 }
 
@@ -60,7 +64,7 @@ function Is-AtWork()
 "`nLoading profile scripts . . . `n"
 . Load-AutoLoadScripts (join-path $profileDir "AutoLoad")
 ""
-. Load-ParkerFoxScriptsIfAtWork
+. Load-ParkerFoxScripts
 ""
 " ************* "
 ""
