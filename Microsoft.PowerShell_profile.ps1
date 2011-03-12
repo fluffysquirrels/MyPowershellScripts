@@ -66,6 +66,9 @@ function Is-AtWork()
 ""
 . Load-ParkerFoxScripts
 ""
+Init-Ssh
+. Load-Script(join-path $profileDir "posh-git\profile.example.ps1")
+""
 " ************* "
 ""
 ""
