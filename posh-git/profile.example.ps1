@@ -7,18 +7,6 @@ Import-Module .\posh-git
 # use this instead (see about_Modules for more information):
 # Import-Module posh-git
 
-
-# Set up a simple prompt, adding the git prompt parts inside git repos
-function prompt {
-    Write-Host($pwd) -nonewline
-        
-    # Git Prompt
-    $Global:GitStatus = Get-GitStatus
-    Write-GitStatus $GitStatus
-      
-    return "> "
-}
-
 if(-not (Test-Path Function:\DefaultTabExpansion)) {
     Rename-Item Function:\TabExpansion DefaultTabExpansion
 }
