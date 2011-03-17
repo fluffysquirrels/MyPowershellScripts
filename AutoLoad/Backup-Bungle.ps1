@@ -1,6 +1,7 @@
 $Backup_PF_TargetDir = "Q:\Alex H backup"
 $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
-function Backup-PF([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
+
+function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
 {
     $machineName = (gc env:COMPUTERNAME)
     if($machineName -ne "BUNGLE")
@@ -34,7 +35,7 @@ function Backup-PF([switch]$dryRun = $false, [switch]$includeGitRepositories = $
     
     if($includeGitRepositories)
     {
-        $allFromDToCopy += Backup-PF-GetGitDataDirectories
+        $allFromDToCopy += Backup-Bungle-GetGitDataDirectories
     }
     
     function DoBackupCopy($from, $to)
@@ -49,7 +50,7 @@ function Backup-PF([switch]$dryRun = $false, [switch]$includeGitRepositories = $
          DoBackupCopy $from $to
     }
     
-    # Backup profile
+    # Backup PowerShell profile
     DoBackupCopy (split-path $profile) $Backup_PF_TargetDir
     # Backup Tomboy
     DoBackupCopy "C:\Users\Alex\AppData\Roaming\Tomboy\notes"  (join-path $Backup_PF_TargetDir "Tomboy notes")
@@ -60,7 +61,7 @@ function Backup-PF([switch]$dryRun = $false, [switch]$includeGitRepositories = $
     write-host "`n", $endMessage
 }
 
-function Backup-PF-GetGitDataDirectories()
+function Backup-Bungle-GetGitDataDirectories()
 {
     return gci "D:\Projects\Git" | ?{$_ -is "System.IO.DirectoryInfo"} | ?{test-path (join-path $_.FullName ".git")} | %{join-path $_.FullName ".git"}
 }
