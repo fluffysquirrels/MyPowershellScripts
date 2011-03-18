@@ -6,6 +6,11 @@ $profileDir = split-path $profile
 
 function Load-AutoLoadScripts($path)
 {
+    if(!(test-path $path)) {
+        Write-Host "Skipping missing auto-load directory $path" -fore Yellow
+        return
+    }
+
     $toLoad = @(gci -recurse $path | 
                ?{$_ -is "System.IO.FileInfo" -and
                $_.Extension -eq ".ps1" -and
@@ -21,7 +26,13 @@ function Load-Script($scriptFile)
     # If $scriptFile is a path string, fetch the fileinfo from that path.
     if ($scriptFile -is "String")
     {
-        $scriptFile = gi $scriptFile
+        if(test-path $scriptFile) {
+            $scriptFile = gi $scriptFile
+        }
+        else {
+            Write-Host "Skipping missing script $scriptFile" -fore Yellow
+            return
+        }
     }
     
     # $scriptFile is a fileinfo object.
@@ -64,10 +75,10 @@ function Is-AtWork()
 "`nLoading profile scripts . . . `n"
 . Load-AutoLoadScripts (join-path $profileDir "AutoLoad")
 ""
-. Load-ParkerFoxScripts
-""
 Init-Ssh
 . Load-Script(join-path $profileDir "posh-git\profile.example.ps1")
+""
+. Load-ParkerFoxScripts
 ""
 " ************* "
 ""
