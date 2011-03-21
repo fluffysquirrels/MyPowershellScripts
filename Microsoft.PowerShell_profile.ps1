@@ -46,7 +46,7 @@ function Load-ParkerFoxScripts()
 {
     if(Is-AtWork)
     {
-        . Load-AutoLoadScripts "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\Main.ps1"
+        . Load-Script "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\Main.ps1"
         . Load-Script "D:\Projects\Git\AspNetStats\Scripts\Poller.ps1"
     }
     else
