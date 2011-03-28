@@ -5,6 +5,8 @@ function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories
 {
     Copy-TomboyNotesToDropbox
 
+    Write-Host ""
+    
     $machineName = (gc env:COMPUTERNAME)
     if($machineName -ne "BUNGLE")
     {
