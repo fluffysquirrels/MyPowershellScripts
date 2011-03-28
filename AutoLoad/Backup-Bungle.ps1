@@ -56,7 +56,8 @@ function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories
     DoBackupCopy (split-path $profile) $Backup_PF_TargetDir
     # Backup Tomboy
     DoBackupCopy "C:\Users\Alex\AppData\Roaming\Tomboy\notes"  (join-path $Backup_PF_TargetDir "Tomboy notes")
-    
+    # Backup Desktop
+    DoBackupCopy "C:\Users\Alex\Desktop"  (join-path $Backup_PF_TargetDir "Desktop")
     
     $endMessage = "$([DateTime]::Now) -- finished backup"
     $endMessage, "`n" >> $Backup_PF_LogfileName
