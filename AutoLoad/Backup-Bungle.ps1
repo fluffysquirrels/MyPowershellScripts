@@ -72,6 +72,7 @@ function Copy-TomboyNotesToDropbox() {
     Write-Host "    from: $from"
     Write-Host "    to: $to"
     
+    rm -recurse "$to\*"
     copy -recurse $from $to    
 }
 
