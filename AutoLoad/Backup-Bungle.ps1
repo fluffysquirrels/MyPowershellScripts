@@ -3,6 +3,8 @@ $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
 
 function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
 {
+    Copy-TomboyNotesToDropbox
+
     $machineName = (gc env:COMPUTERNAME)
     if($machineName -ne "BUNGLE")
     {
@@ -59,6 +61,17 @@ function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories
     $endMessage = "$([DateTime]::Now) -- finished backup"
     $endMessage, "`n" >> $Backup_PF_LogfileName
     write-host "`n", $endMessage
+}
+
+function Copy-TomboyNotesToDropbox() {
+    $from = "C:\Users\Alex\AppData\Roaming\Tomboy\notes"
+    $to = "D:\Dropbox\Tomboy notes - work"
+    
+    Write-Host "Copying Tomboy notes to dropbox"
+    Write-Host "    from: $from"
+    Write-Host "    to: $to"
+    
+    copy -recurse $from $to    
 }
 
 function Backup-Bungle-GetGitDataDirectories()
