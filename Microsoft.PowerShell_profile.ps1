@@ -46,14 +46,13 @@ function Load-ParkerFoxScripts()
 {
     if(Is-AtWork)
     {
-        . Load-Script "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\Main.ps1"
+        . Load-Script "D:\Projects\Git\DeployTools\Scripts\Main.ps1"
         . Load-Script "D:\Projects\Git\AspNetStats\Scripts\Poller.ps1"
-        . Load-Script "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\For deployment server\Setup IIS lib.ps1"
+        . Load-Script "D:\Projects\Git\DeployTools\Scripts\For deployment server\Setup IIS lib.ps1"
     }
     else
     {
-        # . Load-Script "C:\Data\Code\Parker Fox\LoanBook\DeployTools\Scripts\Main.ps1"
-        . Load-Script "C:\Data\Code\Parker Fox\Git\LoanBook\DeployTools\Scripts\Main.ps1"
+        . Load-Script "C:\Data\Code\Parker Fox\Git\DeployTools\Scripts\Main.ps1"
     }
 }
 
