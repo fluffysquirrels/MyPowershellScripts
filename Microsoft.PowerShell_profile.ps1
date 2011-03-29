@@ -48,6 +48,7 @@ function Load-ParkerFoxScripts()
     {
         . Load-Script "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\Main.ps1"
         . Load-Script "D:\Projects\Git\AspNetStats\Scripts\Poller.ps1"
+        . Load-Script "D:\Projects\Git\LoanBookUK - Shallow\DeployTools\Scripts\For deployment server\Setup IIS lib.ps1"
     }
     else
     {
