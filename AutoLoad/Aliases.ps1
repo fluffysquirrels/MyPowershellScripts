@@ -1,8 +1,8 @@
 # Helper function to save duplication
 function New-AliasInProfile($Name, $Value) {
-    if(test-path Alias:$Name)
+    if(test-path -LiteralPath Alias:$Name)
     {
-        del Alias:$Name
+        del -LiteralPath Alias:$Name
     }
     
     New-Alias @args @PSBoundParameters -ErrorAction SilentlyContinue -scope Global
@@ -46,3 +46,4 @@ New-AliasInProfile l            less
 New-AliasInProfile new          New-Object
 # So we can reload profile just by typing '. p'
 New-AliasInProfile p            ($profile)
+New-AliasInProfile ??           Coalesce-Args
