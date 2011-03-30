@@ -1,4 +1,4 @@
-function Get-IsAdmin()
+function Test-IsAdmin()
 {
     $id = [System.Security.Principal.WindowsIdentity]::GetCurrent()
     $wp = new-object System.Security.Principal.WindowsPrincipal($id)
