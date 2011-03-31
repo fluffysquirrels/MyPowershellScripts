@@ -33,6 +33,7 @@ function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories
     $allFromDToCopy = (
         "D:\Documents",
         "D:\Projects\Git\*.*",
+        "D:\Projects\Test xml",
         "D:\Projects\SQL tools scripts",
         "D:\Run box shortcuts"
         )
