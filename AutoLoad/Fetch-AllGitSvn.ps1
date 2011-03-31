@@ -1,7 +1,9 @@
-function Fetch-AllGitSvn()
+function Fetch-AllGitSvn
+(
+    $gitProjectsRoot = (Get-GitProjectsPath)
+)
 {
-    $gitProjectsRoot = "D:\Projects\Git"
-    $projectsToFetch = gci $gitProjectsRoot | ?{$_.psiscontainer -and $_.name -ne "LoanBookUK - broken"} 
+    $projectsToFetch = gci $gitProjectsRoot | ?{$_.psiscontainer} 
     foreach($project in $projectsToFetch)
     {
         $path = $project.fullname
@@ -9,4 +11,17 @@ function Fetch-AllGitSvn()
         cd $path
         git svn fetch
     }
+}
+
+function Get-GitProjectsPath() {
+    $pcName = $env:computername
+    $rv = ""
+    
+    switch($pcName) {
+        "BUNGLE"    { $rv = "D:\Projects\Git" }
+        "BEAST"     { $rv = "c:\Data\Code\Parker Fox\Git" }
+        default     { throw "Unrecognised computer name '$pcName'" }
+    }
+    
+    return $rv
 }
