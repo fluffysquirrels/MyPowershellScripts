@@ -3,7 +3,7 @@ function Fetch-AllGitSvn
     $gitProjectsRoot = (Get-GitProjectsPath)
 )
 {
-    $projectsToFetch = gci $gitProjectsRoot | ?{$_.psiscontainer} 
+    $projectsToFetch = gci -recurse -force $gitProjectsRoot | ?{$_.name -eq ".git"} | %{$_.parent}
     foreach($project in $projectsToFetch)
     {
         $path = $project.fullname
