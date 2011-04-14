@@ -77,8 +77,8 @@ function Is-AtWork()
 . Load-AutoLoadScripts (join-path $profileDir "AutoLoad")
 ""
 Init-Ssh
-. Load-Script(join-path $profileDir "posh-git\profile.example.ps1")
 ""
+Import-Module posh-git
 . Load-ParkerFoxScripts
 ""
 " ************* "
