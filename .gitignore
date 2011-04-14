@@ -1,1 +1,5 @@
 SyncToy*.dat
+
+#PowerTab config and cache
+PowerTabConfig.xml
+TabExpansion.xml
