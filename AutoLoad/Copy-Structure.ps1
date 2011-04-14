@@ -1,19 +1,19 @@
-function Copy-Structure($toCopy, [string] $to, [string] $toCopyBasePath)
+function Copy-Structure
+(
+    $files,
+    [string] $targetPath,
+    [string] $filesBasePath,
+    [switch] $force = $false
+)
 {
-    foreach ($file in $toCopy)
+    foreach ($file in $files)
     {
         $fromPath = $file.FullName
-        $toPath = Join-Path $to $file.FullName.Substring($toCopyBasePath.length)
+        $targetFilePath = Join-Path $targetPath $file.FullName.Substring($filesBasePath.length)
         
-        $toParentPath = (split-path $toPath)
-        if(-not (test-path $toParentPath))
-        {
-            # File's parent directory doesn't exist.
-            
-            # Seemingly pointless assignment is to eat the shell output. Without it PowerShell prints the params of the new dir.
-            $newDir = new-item -type directory $toParentPath
-        }
+        $targetFileParentPath = (split-path $targetFilePath)
+        Ensure-Directory $targetFileParentPath
         
-        copy-item -path $fromPath -destination $toPath
+        copy-item -path $fromPath -destination $targetFilePath -force:$force
     }
 }
