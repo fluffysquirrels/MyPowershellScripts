@@ -79,6 +79,8 @@ function Is-AtWork()
 Init-Ssh
 ""
 Import-Module posh-git
+# Import-Module PowerTab
+""
 . Load-ParkerFoxScripts
 ""
 " ************* "
