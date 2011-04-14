@@ -78,6 +78,7 @@ function Is-AtWork()
 ""
 Init-Ssh
 ""
+Import-Module pscx
 Import-Module posh-git
 # Import-Module PowerTab
 ""
