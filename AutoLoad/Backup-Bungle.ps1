@@ -21,7 +21,7 @@ function Backup-Bungle([switch]$dryRun = $false)
 
     if (!$dryRun)
     {
-        $toDelete = (gci $Backup_PF_TargetDir | ?{$_.PSIsContainer} | %{$_.FullName})
+        $toDelete = @(gci $Backup_PF_TargetDir | ?{$_.PSIsContainer} | %{$_.FullName})
         $toDelete | % {
             Write-Host "Deleting $_\"
             del -recurse -force $_
