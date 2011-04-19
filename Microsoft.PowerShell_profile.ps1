@@ -71,20 +71,23 @@ function Is-AtWork()
     return $atWork
 }
 
+function Load-Profile() {
 
+    "`nLoading profile scripts . . . `n"
+    . Load-AutoLoadScripts (join-path $profileDir "AutoLoad")
+    ""
+    Init-Ssh
+    ""
+    Import-Module pscx
+    Import-Module posh-git
+    # Import-Module PowerTab
+    ""
+    . Load-ParkerFoxScripts
+    ""
+    " ************* "
+    ""
+    ""
+    ""
+}
 
-"`nLoading profile scripts . . . `n"
-. Load-AutoLoadScripts (join-path $profileDir "AutoLoad")
-""
-Init-Ssh
-""
-Import-Module pscx
-Import-Module posh-git
-# Import-Module PowerTab
-""
-. Load-ParkerFoxScripts
-""
-" ************* "
-""
-""
-""
+. Load-Profile
