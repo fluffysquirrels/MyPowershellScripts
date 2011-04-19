@@ -46,9 +46,9 @@ function Load-ParkerFoxScripts()
 {
     if(Is-AtWork)
     {
-        . Load-Script "D:\Projects\Git\DeployTools\Scripts\Main.ps1"
-        . Load-Script "D:\Projects\Git\AspNetStats\Scripts\Poller.ps1"
-        . Load-Script "D:\Projects\Git\DeployTools\Scripts\For deployment server\Setup IIS lib.ps1"
+        . Load-Script "D:\Projects\SVN\DeployTools\Scripts\Main.ps1"
+        . Load-Script "D:\Projects\SVN\DeployTools\Scripts\For deployment server\Setup IIS lib.ps1"
+        . Load-Script "D:\Projects\SVN\AspNetStats\Scripts\Poller.ps1"
     }
     else
     {

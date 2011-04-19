@@ -1,7 +1,7 @@
 $Backup_PF_TargetDir = "Q:\Alex H backup"
 $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
 
-function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories = $true)
+function Backup-Bungle([switch]$dryRun = $false)
 {
     Copy-TomboyNotesToDropbox
 
@@ -35,11 +35,6 @@ function Backup-Bungle([switch]$dryRun = $false, [switch]$includeGitRepositories
         "D:\Projects\Test xml",
         "D:\Run box shortcuts"
         )
-    
-    if($includeGitRepositories)
-    {
-        $allFromDToCopy += Backup-Bungle-GetGitDataDirectories
-    }
     
     function DoBackupCopy($from, $to)
     {
