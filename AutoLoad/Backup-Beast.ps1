@@ -1,6 +1,6 @@
 function Backup-Beast()
 {
-    $backupBase = "F:\Backup"
+    $backupBase = "E:\Backup"
     $logPath = join-path $backupBase "robo_log.txt"
     
     if(test-path $logPath)
