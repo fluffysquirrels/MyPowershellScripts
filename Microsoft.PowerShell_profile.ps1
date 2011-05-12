@@ -58,8 +58,8 @@ function Load-ParkerFoxScripts()
 {
     if(Is-AtWork)
     {
-        . Load-Script "D:\Projects\SVN\DeployTools\Scripts\Main.ps1" -verbose
-        . Load-Script "D:\Projects\SVN\DeployTools\Scripts\For deployment server\Setup - IIS lib.ps1" -verbose
+        . Load-Script "D:\Projects\SVN\DeployTools\trunk\Scripts\Main.ps1" -verbose
+        . Load-Script "D:\Projects\SVN\DeployTools\trunk\Scripts\For deployment server\Setup - IIS lib.ps1" -verbose
         . Load-Script "D:\Projects\SVN\AspNetStats\Scripts\Poller.ps1" -verbose
     }
     else
