@@ -32,7 +32,8 @@ function Backup-Bungle([switch]$dryRun = $false)
     
     $allFromDToCopy = (
         "D:\Documents",
-        "D:\Projects\Test xml",
+        "D:\Projects\SVN\Test xml",
+        "D:\Projects\SVN\Utility SQL",
         "D:\Run box shortcuts"
         )
     
