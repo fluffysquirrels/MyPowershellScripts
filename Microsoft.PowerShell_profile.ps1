@@ -76,12 +76,12 @@ function Is-AtWork()
 function Load-Profile() {
 
     "`nLoading profile scripts . . . `n"
+    . Load-ParkerFoxScripts
     . Load-AutoLoadScripts (join-path $profileDir "AutoLoad")
     Import-Module pscx
     Import-Module posh-git
     # Import-Module PowerTab
 
-    . Load-ParkerFoxScripts
     ""
     Init-Ssh
     ""
