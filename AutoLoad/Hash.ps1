@@ -1,4 +1,9 @@
-function Get-SHA1($path)
+function Get-SHA1
+(
+    $path,
+    $pathBase,
+    [switch] $relative = $true
+)
 {
     begin
     {
@@ -7,9 +12,13 @@ function Get-SHA1($path)
             $pathInfo = gi $path
             
             if($pathInfo.PSIsContainer) {
+                if($relative) {
+                    $pathBase = $pathInfo.FullName
+                }
+            
                 gci -recurse $path |
                     ? {!$_.PSIsContainer} |
-                    % {get-sha1 $_.FullName}
+                    % {Get-SHA1 $_.FullName -pathBase $pathBase}
                 
                 return
             }
@@ -19,7 +28,7 @@ function Get-SHA1($path)
             try {
                 $fs = new-object "io.filestream" (
                     $path,
-                    "Open",     # FileMode
+                    "Open",     # FileMode      -- Open, Create, that kind of thing
                     "Read",     # FileAccess    -- what can we do?
                     "Read"      # FileShare     -- what can others do?
                     )
@@ -33,13 +42,19 @@ function Get-SHA1($path)
 
             if($hashBytes -ne $null) {
                 $hashString = [string]::join("", @($hashBytes | %{$_.tostring("x2")}))
-                $outputLine = "$hashString '$path'"
+                if($pathBase -eq $null) {
+                    $displayPath = $path
+                }
+                else {
+                    $displayPath = $path.Replace($pathBase, "")
+                }
+                $outputLine = "$hashString $displayPath"
                 
                 $hashInfo = new-object "PSObject"
-                add-member -in $hashInfo NoteProperty "Path" $path
-                add-member -in $hashInfo NoteProperty "HashBytes" $hashBytes
-                add-member -in $hashInfo NoteProperty "HashString" $hashString
-                add-member -in $hashInfo NoteProperty "OutputLine" $outputLine
+                add-member -in $hashInfo NoteProperty "Path"        $displayPath
+                add-member -in $hashInfo NoteProperty "HashBytes"   $hashBytes
+                add-member -in $hashInfo NoteProperty "HashString"  $hashString
+                add-member -in $hashInfo NoteProperty "OutputLine"  $outputLine
                 return $hashInfo
             }
         }
@@ -47,7 +62,7 @@ function Get-SHA1($path)
     process
     {
         if($path -eq $null -and $_ -ne $null) {
-            Get-SHA1 $_
+            Get-SHA1 $_ -pathBase $pathBase
         }
     }
 }
