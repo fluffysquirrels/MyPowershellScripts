@@ -14,10 +14,22 @@ function Get-SHA1($path)
                 return
             }
             
-            $fileBytes = [IO.File]::ReadAllBytes($path)
-
             $hasher = new-object "Security.Cryptography.SHA1Managed"
-            $hashBytes = $hasher.ComputeHash($fileBytes)
+            
+            try {
+                $fs = new-object "io.filestream" (
+                    $path,
+                    "Open",     # FileMode
+                    "Read",     # FileAccess    -- what can we do?
+                    "Read"      # FileShare     -- what can others do?
+                    )
+                $hashBytes = $hasher.ComputeHash($fs)
+            }
+            finally {
+                if($fs -ne $null) {
+                    $fs.Dispose()
+                }
+            }
 
             if($hashBytes -ne $null) {
                 $hashString = [string]::join("", @($hashBytes | %{$_.tostring("x2")}))
