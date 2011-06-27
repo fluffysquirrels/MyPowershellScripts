@@ -1,12 +1,3 @@
-# Helper function to save duplication
-function New-AliasInProfile($Name, $Value) {
-    if(test-path -LiteralPath Alias:$Name)
-    {
-        del -LiteralPath Alias:$Name
-    }
-    
-    New-Alias @args @PSBoundParameters -ErrorAction SilentlyContinue -scope Global
-}
 function Get-HelpWithLess
 (
     $Name,
@@ -39,11 +30,14 @@ function Get-HelpWithLessDetailed
     (Get-Help @psboundparameters -detailed) | less
 }
 
-New-AliasInProfile fs           Format-String
-New-AliasInProfile help         Get-HelpWithLess
-New-AliasInProfile helpd        Get-HelpWithLessDetailed
-New-AliasInProfile l            less
-New-AliasInProfile new          New-Object
+# New-Alias -force cd             push-set-location           -Option AllScope
+# New-Alias -force cd-            Pop-Location
+New-Alias -force fs             Format-String
+New-Alias -force help           Get-HelpWithLess
+New-Alias -force helpd          Get-HelpWithLessDetailed
+New-Alias -force l              less
+New-Alias -force new            New-Object
 # So we can reload profile just by typing '. p'
-New-AliasInProfile p            ($profile)
-New-AliasInProfile ??           Coalesce-Args
+New-Alias -force p              ($profile)
+New-Alias -force ??             Coalesce-Args
+
