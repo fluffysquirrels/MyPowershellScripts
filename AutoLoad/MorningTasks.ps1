@@ -7,14 +7,12 @@ function Run-MorningTasks {
 
     Write-Host ""
     Write-Host "*****"
-    
-    if($env:COMPUTERNAME -eq "BEAST") {
-        Write-Host "Pulling from Parker Fox SVN repository . . ."
-        Fetch-AllGitSvn
+        
+    Write-Host "Pulling from Parker Fox SVN repository . . ."
+    Fetch-AllGitSvn
 
-        Write-Host ""
-        Write-Host "*****"
-    }
+    Write-Host ""
+    Write-Host "*****"
     
     if($env:COMPUTERNAME -eq "BUNGLE") {
         Write-Host "Backing up BUNGLE . . ."
