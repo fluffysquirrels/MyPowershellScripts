@@ -1,4 +1,4 @@
-$Backup_PF_TargetDir = "Q:\Alex H backup"
+$Backup_PF_TargetDir = "Q:\Alex.Helfet\bak"
 $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
 
 function Backup-Bungle([switch]$dryRun = $false)
