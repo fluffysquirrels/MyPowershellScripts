@@ -1,4 +1,8 @@
 function prompt {
+    # Do this so git and svn exit codes don't clobber that
+    # of the last command entered in the shell.
+    $pushedLastExitCode = $LASTEXITCODE
+    
     $host.ui.rawui.WindowTitle = "PS " + $(get-location)
     
     Write-Host -foregroundcolor yellow -nonewline -object ($(
@@ -10,6 +14,8 @@ function prompt {
     if      (Write-GitPrompt) {}
     elseif  (Write-SvnPrompt) {}
 
+    $LASTEXITCODE = $pushedLastExitCode
+    
     Write-Host ">" -foregroundcolor yellow -nonewline
     
     return " "
