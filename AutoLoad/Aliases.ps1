@@ -40,6 +40,7 @@ function Get-HelpWithLessDetailed
 }
 
 New-AliasInProfile fs           Format-String
+New-AliasInProfile gt           Get-Text
 New-AliasInProfile help         Get-HelpWithLess
 New-AliasInProfile helpd        Get-HelpWithLessDetailed
 New-AliasInProfile l            less

@@ -1,5 +1,14 @@
-function Get-Text ($fn)
+function Get-Text 
+(
+    [Parameter(
+        ValueFromPipelineByPropertyName=$true)]
+        $PSPath
+)
 {
-    $path = convert-path $fn
-    [System.IO.File]::ReadAllText($path)
+    process
+    {
+        $PSPath = convert-path $PSPath
+        $text = [System.IO.File]::ReadAllText($PSPath)
+        return $text
+    }
 }
