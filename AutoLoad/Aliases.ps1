@@ -39,4 +39,4 @@ New-Alias -force    new             New-Object
 # So we can reload profile just by typing '. p'
 New-Alias -force    p               ($profile)
 New-Alias -force    ??              Coalesce-Args
-
+New-Alias -force    wr              Where-Regex
