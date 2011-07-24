@@ -41,7 +41,7 @@ function Get-SHA1
             }
 
             if($hashBytes -ne $null) {
-                $hashString = [string]::join("", @($hashBytes | %{$_.tostring("x2")}))
+                $hashString = Convert-BytesToHexString
                 if($pathBase -eq $null) {
                     $displayPath = $path
                 }
@@ -65,4 +65,8 @@ function Get-SHA1
             Get-SHA1 $_ -pathBase $pathBase
         }
     }
+}
+
+function Convert-BytesToHexString($bytes) {
+    return [string]::join("", @($bytes | %{$_.tostring("x2")}))
 }
