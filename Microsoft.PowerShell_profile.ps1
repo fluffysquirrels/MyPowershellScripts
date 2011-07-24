@@ -60,6 +60,7 @@ function Load-ParkerFoxScripts()
     {
         . Load-Script "D:\Projects\SVN\DeployTools\trunk\Scripts\BuildPc.Main.ps1" -verbose
         . Load-Script "D:\Projects\SVN\AspNetStats\Scripts\Poller.ps1" -verbose
+        . Load-Script "D:\Projects\SVN\PageScanner\PageScanner.ps1" -verbose
     }
     else
     {
