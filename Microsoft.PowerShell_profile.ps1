@@ -3,6 +3,7 @@ $ErrorActionPreference = "Stop"
 # ************ Load other profile scripts ************
 
 $profileDir = split-path $profile
+$MachineName_Work = "PFD4544"
 
 function Load-AutoLoadScripts
 (

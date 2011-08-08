@@ -1,6 +1,5 @@
 $Backup_PF_TargetDir = "Q:\Alex.Helfet\bak"
 $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
-$MachineName_Work = "PFD4544"
 
 function Backup-Work([switch]$dryRun = $false)
 {
