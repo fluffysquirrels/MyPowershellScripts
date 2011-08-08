@@ -18,7 +18,7 @@ function Get-GitProjectsPath() {
     $rv = ""
     
     switch($pcName) {
-        "BUNGLE"    { $rv = "D:\Projects\Git" }
+        $MachineName_Work    { $rv = "D:\Projects\Git" }
         "BEAST"     { $rv = "c:\Data\Code\Parker Fox\Git" }
         default     { throw "Unrecognised computer name '$pcName'" }
     }

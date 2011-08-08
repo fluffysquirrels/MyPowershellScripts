@@ -1,17 +1,18 @@
 $Backup_PF_TargetDir = "Q:\Alex.Helfet\bak"
 $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
+$MachineName_Work = "PFD4544"
 
-function Backup-Bungle([switch]$dryRun = $false)
+function Backup-Work([switch]$dryRun = $false)
 {
     Copy-TomboyNotesToDropbox
 
     Write-Host ""
     
     $machineName = (gc env:COMPUTERNAME)
-    if($machineName -ne "BUNGLE")
+    if($machineName -ne $MachineName_Work)
     {
-        Write-Host "On '$machineName', not 'BUNGLE'!"
-        Write-Host "Backup is only set up on 'BUNGLE'"
+        Write-Host "On '$machineName', not '$MachineName_Work'!"
+        Write-Host "Backup is only set up on '$MachineName_Work'"
         return
     }
 
@@ -73,7 +74,7 @@ function Copy-TomboyNotesToDropbox() {
     copy -recurse $from $to    
 }
 
-function Backup-Bungle-GetGitDataDirectories()
+function Backup-Work.GetGitDataDirectories()
 {
     return gci "D:\Projects\Git" | ?{$_ -is "System.IO.DirectoryInfo"} | ?{test-path (join-path $_.FullName ".git")} | %{join-path $_.FullName ".git"}
 }

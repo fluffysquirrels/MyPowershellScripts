@@ -14,11 +14,11 @@ function Run-MorningTasks {
     Write-Host ""
     Write-Host "*****"
     
-    if($env:COMPUTERNAME -eq "BUNGLE") {
-        Write-Host "Backing up BUNGLE . . ."
+    if($env:COMPUTERNAME -eq "$MachineName_Work") {
+        Write-Host "Backing up $MachineName_Work . . ."
         Backup-Bungle
     }
     else {
-        Write-Host "Can't run backup, not on BUNGLE!"
+        Write-Host "Can't run backup, not on $MachineName_Work!"
     }
 }

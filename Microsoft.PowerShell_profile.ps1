@@ -56,7 +56,7 @@ function Load-Script
 
 function Load-ParkerFoxScripts()
 {
-    if(Is-AtWork)
+    if(Test-AtWork)
     {
         . Load-Script "D:\Projects\SVN\DeployTools\trunk\Scripts\BuildPc.Main.ps1" -verbose
         . Load-Script "D:\Projects\SVN\AspNetStats\Scripts\Poller.ps1" -verbose
@@ -68,9 +68,9 @@ function Load-ParkerFoxScripts()
     }
 }
 
-function Is-AtWork()
+function Test-AtWork()
 {
-    return $env:computername -eq "BUNGLE"
+    return $env:computername -eq "$MachineName_Work"
 }
 
 function Load-Profile() {
