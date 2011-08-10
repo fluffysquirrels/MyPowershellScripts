@@ -44,6 +44,3 @@ function Get-MasterPages
         return $pages
     }
 }
-
-Get-MasterPages  "D:\Projects\SVN\LoanBookUK\LB-3653_Server_Name_In_LMS_Header\LMS" -pretty
-
