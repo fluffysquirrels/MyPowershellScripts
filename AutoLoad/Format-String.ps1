@@ -1,7 +1,11 @@
-function Format-String()
+function Format-String
+(
+    [Parameter(ValueFromPipeline = $true)]
+    $inputObject
+)
 {
     process
     {
-        return $_.ToString()
+        return $inputObject.ToString()
     }
 }
