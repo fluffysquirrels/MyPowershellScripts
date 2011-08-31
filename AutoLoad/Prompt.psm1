@@ -63,3 +63,5 @@ function Write-SvnPrompt {
 
     return $true
 }
+
+Export-ModuleMember -Function prompt

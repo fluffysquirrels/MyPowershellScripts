@@ -25,3 +25,5 @@ function Get-GitProjectsPath() {
     
     return $rv
 }
+
+Export-ModuleMember -Function Fetch-AllGitSvn

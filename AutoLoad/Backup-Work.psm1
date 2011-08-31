@@ -1,4 +1,4 @@
-$Backup_PF_TargetDir = "Q:\Alex.Helfet\bak"
+$Backup_PF_TargetDir = "N:\Users\ahelfet\backup"
 $Backup_PF_LogfileName = $Backup_PF_TargetDir + "\BackupLog.txt"
 
 function Backup-Work([switch]$dryRun = $false)
@@ -19,15 +19,6 @@ function Backup-Work([switch]$dryRun = $false)
     $startMessage >> $Backup_PF_LogfileName
     write-host $startMessage, "`n"
 
-    if (!$dryRun)
-    {
-        $toDelete = @(gci $Backup_PF_TargetDir | ?{$_.PSIsContainer} | %{$_.FullName})
-        $toDelete | % {
-            Write-Host "Deleting $_\"
-            del -recurse -force $_
-        }
-    }
-
     Write-Host ""
     
     $allFromDToCopy = (
@@ -37,20 +28,22 @@ function Backup-Work([switch]$dryRun = $false)
         "D:\Run box shortcuts"
         )
     
+    $allFromDToCopy += @(Backup-Work.GetGitDataDirectories)
+    
     function DoBackupCopy($from, $to)
     {
         Backup-LoggedCopy $from $to -dryRun:$dryRun
     }
     
     foreach($from in $allFromDToCopy)
-    {
-        $to = (join-path $Backup_PF_TargetDir (split-path $from.Replace("D:", "")))
+    {       
+        $to = join-path $Backup_PF_TargetDir ($from.Replace("D:", ""))
         
-         DoBackupCopy $from $to
+        DoBackupCopy $from $to
     }
     
     # Backup PowerShell profile
-    DoBackupCopy (split-path $profile) $Backup_PF_TargetDir
+    DoBackupCopy (split-path $profile) (join-path $Backup_PF_TargetDir "WindowsPowerShell")
     # Backup Tomboy
     DoBackupCopy "C:\Users\Alex\AppData\Roaming\Tomboy\notes"  (join-path $Backup_PF_TargetDir "Tomboy notes")
     # Backup Desktop
@@ -75,7 +68,12 @@ function Copy-TomboyNotesToDropbox() {
 
 function Backup-Work.GetGitDataDirectories()
 {
-    return gci "D:\Projects\Git" | ?{$_ -is "System.IO.DirectoryInfo"} | ?{test-path (join-path $_.FullName ".git")} | %{join-path $_.FullName ".git"}
+    # Return .git directories of all top level dirs in Git projects folder.
+
+    return gci "D:\Projects\Git" |
+        ?{$_ -is "System.IO.DirectoryInfo"} |
+        ?{test-path (join-path $_.FullName ".git")} |
+        %{join-path $_.FullName ".git"}
 }
 
 function Backup-LoggedCopy($from, $to, [switch]$dryRun)
@@ -85,7 +83,7 @@ function Backup-LoggedCopy($from, $to, [switch]$dryRun)
     if($dryRun -eq $false)
     {
         Ensure-Directory $to
-        copy -recurse $from $to
+        $output = robocopy $from $to /mir
     }
 }
 
@@ -94,3 +92,5 @@ function Ensure-Directory($path) {
         $newDir = new-item $path -type directory
     }
 }
+
+ Export-ModuleMember -function "Backup-Work"

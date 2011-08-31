@@ -20,12 +20,22 @@ function Load-AutoLoadScripts
 
     $toLoad = @(gci -recurse $path | 
                ?{$_ -is "System.IO.FileInfo" -and
-               $_.Extension -eq ".ps1" -and
+               (@(".ps1", ".psm1") -contains $_.Extension) -and
                $_.FullName -ne $profile})
-               
+
     foreach($script in $toLoad)
     {
-        . Load-Script $script -verbose:$verbose
+        switch($script.Extension) {
+            ".ps1" {
+                . Load-Script $script -verbose:$verbose
+            }
+            ".psm1" {
+                Import-Module -Force -DisableNameChecking $script.FullName
+            }
+            default {
+                throw "Unknown script extension for file $($script.FullName)"
+            }
+        }
     }
 }
 function Load-Script

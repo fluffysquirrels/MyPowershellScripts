@@ -32,3 +32,5 @@ function Get-BeastBackupDrivePath()
     
     return $volumes[0]
 }
+
+Export-ModuleMember -Function Backup-Beast
