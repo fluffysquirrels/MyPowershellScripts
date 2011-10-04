@@ -13,6 +13,8 @@ function Snapshot-Config
         mkdir -force (split-path $targetPath) | Out-Null
         cp $file.fullname $targetPath
     }
+    
+    Write-Host "Configuration written to $backupRootDir"
 }
 
 function Get-DefaultSnapshotConfigDir()
@@ -22,3 +24,5 @@ function Get-DefaultSnapshotConfigDir()
     $dateStr = [DateTime]::Now.ToString("yyyy-MM-dd_HH-mm")
     return "$userDir\Documents\ConfigSnapshot_$($machine)_$dateStr"
 }
+
+
